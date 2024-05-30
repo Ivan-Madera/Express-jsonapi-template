@@ -1,0 +1,44 @@
+service: lambda-template
+frameworkVersion: '3'
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region:  us-east-1
+  stage: ${opt:stage}
+  iam:
+    role: arn:aws:iam::${param:ACCOUNT_ID_LAMBDA,''}:role/${param:LAMBDA_ROLE, ''}
+  vpc:
+    securityGroupIds:
+      - ${param:sg1}
+    subnetIds:
+      - ${param:subnet1}
+      - ${param:subnet2}
+  apiGateway:
+    restApiId: ${param:RESTAPIID, ''}
+    restApiRootResourceId: ${param:RESTAPIROOTRESOURCEID, ''}
+  environment:
+    ENV: ${param:ENV, ''}
+    PORT: ${param:PORT, ''}
+    DB_DATABASE: ${param:DB_DATABASE, ''}
+    DB_USERNAME: ${param:DB_USERNAME, ''}
+    DB_PASSWORD: ${param:DB_PASSWORD, ''}
+    DB_HOST: ${param:DB_HOST, ''}
+    DB_PORT: ${param:DB_PORT, ''}
+    TOKEN: ${param:TOKEN, ''}
+custom:
+  serverless-offline:
+    functionCleanupIdleTimeSeconds: 5
+  serverlessPluginTypescript:
+    tsConfigFileLocation: './tsconfig.build.json'
+
+functions:
+  api:
+    handler: app.handler
+    events:
+      - httpApi: '*'
+    timeout: 60
