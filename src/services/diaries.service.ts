@@ -13,5 +13,9 @@ export const createDiaries = (newDiaryEntry: INewDiaryEntry): IDiaryObject => {
   }
 
   diariesData.push(newDiary)
+
+  // throw new Error('Falló la cosa')
+
+  // eslint-disable-next-line no-unreachable
   return newDiary
 }

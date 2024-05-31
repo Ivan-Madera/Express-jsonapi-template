@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { diaries, diariesCreate } from '../controllers/diaries.controller'
 import { diariesCreateValidator } from '../validators/diaries.validators'
+import { jsonAPIValidator } from '../middlewares/authentication'
 const router = Router()
 
 /**
@@ -27,29 +28,37 @@ router.get('/diaries', [], diaries)
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         application/vnd.api+json:
  *           schema:
  *             type: object
  *             properties:
- *               date:
- *                 type: string
- *               weather:
- *                 type: string
- *               visibility:
- *                 type: string
- *               comment:
- *                 type: string
- *             required:
- *               - date
- *               - weather
- *               - visibility
- *               - comment
+ *               data:
+ *                 type: object
+ *                 properties:
+ *                   type:
+ *                     type: string
+ *                     default: diaries
+ *                   attributes:
+ *                     type: object
+ *                     properties:
+ *                       date:
+ *                         type: string
+ *                       weather:
+ *                         type: string
+ *                       visibility:
+ *                         type: string
+ *                       comment:
+ *                         type: string
  *     responses:
  *       200:
  *         description: Creacion de la entrada exitosa
  *       500:
  *         description: Mensaje de error
  */
-router.post('/diaries', [...diariesCreateValidator], diariesCreate)
+router.post(
+  '/diaries',
+  [jsonAPIValidator, ...diariesCreateValidator],
+  diariesCreate
+)
 
 export default router
