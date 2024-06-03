@@ -13,9 +13,17 @@ const router = Router()
  *     description: Obtiene la información relevante de los viajes.
  *     responses:
  *       200:
- *         description: Éxito. Devuelve la información de los viajes.
+ *         description: Request exitoso.
+ *       400:
+ *          description: Ocurrio un error durante el proceso.
+ *       401:
+ *          description: Usuario no autorizado.
+ *       415:
+ *         description: Tipo de medio no soportado.
+ *       422:
+ *         description: Contenido no procesable.
  *       500:
- *         description: Error interno del servidor.
+ *         description: Mensaje de error.
  */
 router.get('/diaries', [], diaries)
 
@@ -51,9 +59,17 @@ router.get('/diaries', [], diaries)
  *                         type: string
  *     responses:
  *       200:
- *         description: Creacion de la entrada exitosa
+ *         description: Request exitoso.
+ *       400:
+ *          description: Ocurrio un error durante el proceso.
+ *       401:
+ *          description: Usuario no autorizado.
+ *       415:
+ *         description: Tipo de medio no soportado.
+ *       422:
+ *         description: Contenido no procesable.
  *       500:
- *         description: Mensaje de error
+ *         description: Mensaje de error.
  */
 router.post(
   '/diaries',

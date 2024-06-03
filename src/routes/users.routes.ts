@@ -31,9 +31,13 @@ const router = Router()
  *       400:
  *          description: Ocurrio un error durante el proceso.
  *       401:
- *         description: No autorizado.
+ *          description: Usuario no autorizado.
+ *       415:
+ *         description: Tipo de medio no soportado.
+ *       422:
+ *         description: Contenido no procesable.
  *       500:
- *         description: Error interno del servidor.
+ *         description: Mensaje de error.
  */
 router.get('/accesstoken', [], getAccessToken)
 
@@ -55,9 +59,13 @@ router.get('/accesstoken', [], getAccessToken)
  *       400:
  *          description: Ocurrio un error durante el proceso.
  *       401:
- *         description: No autorizado.
+ *          description: Usuario no autorizado.
+ *       415:
+ *         description: Tipo de medio no soportado.
+ *       422:
+ *         description: Contenido no procesable.
  *       500:
- *         description: Error interno del servidor.
+ *         description: Mensaje de error.
  */
 router.get('/users', [checkBearer], getUsers)
 
@@ -113,9 +121,13 @@ router.get('/users', [checkBearer], getUsers)
  *       400:
  *          description: Ocurrio un error durante el proceso.
  *       401:
- *         description: No autorizado.
+ *          description: Usuario no autorizado.
+ *       415:
+ *         description: Tipo de medio no soportado.
+ *       422:
+ *         description: Contenido no procesable.
  *       500:
- *         description: Error interno del servidor.
+ *         description: Mensaje de error.
  */
 router.post('/user', [checkAuth], createUser)
 
@@ -150,9 +162,13 @@ router.post('/user', [checkAuth], createUser)
  *       400:
  *          description: Ocurrio un error durante el proceso.
  *       401:
- *         description: No autorizado.
+ *          description: Usuario no autorizado.
+ *       415:
+ *         description: Tipo de medio no soportado.
+ *       422:
+ *         description: Contenido no procesable.
  *       500:
- *         description: Error interno del servidor.
+ *         description: Mensaje de error.
  */
 router.patch('/user', [checkAuth], updateUser)
 
