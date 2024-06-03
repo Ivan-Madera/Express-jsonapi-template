@@ -22,6 +22,7 @@ export interface IJsonResponseApiMessage {
     }
   }
 }
+
 export interface IJsonResponseApiError {
   status: number
   source: {
@@ -38,4 +39,14 @@ export interface IJsonResponseApiGeneric {
     | IJsonResponseApiData
     | IJsonResponseApiMessage
     | IJsonResponseApiError
+}
+
+export interface IJsonResponseApiValidator {
+  status: number
+  source: {
+    pointer: string
+  }
+  suggestedActions: string
+  title: string
+  detail: string
 }

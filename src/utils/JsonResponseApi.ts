@@ -90,3 +90,20 @@ export const JsonResponseApiGeneric = (
     response
   }
 }
+
+export const JsonResponseApiValidator = (
+  status: number,
+  pointer: string,
+  suggestions: string,
+  detail: string
+): IJsonResponseApiError => {
+  return {
+    status,
+    source: {
+      pointer
+    },
+    suggestedActions: suggestions,
+    title: ErrorTitles[status],
+    detail
+  }
+}
