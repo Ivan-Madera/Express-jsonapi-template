@@ -31,3 +31,11 @@ export interface IJsonResponseApiError {
   title: string
   detail: string
 }
+
+export interface IJsonResponseApiGeneric {
+  status: number
+  response:
+    | IJsonResponseApiData
+    | IJsonResponseApiMessage
+    | IJsonResponseApiError
+}

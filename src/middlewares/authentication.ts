@@ -10,8 +10,6 @@ export const jsonAPIValidator = (req: any, res: any, next: any): any => {
   try {
     const content = req.get('Content-Type')
 
-    console.log(content)
-
     if (content === 'application/vnd.api+json') {
       return next()
     }

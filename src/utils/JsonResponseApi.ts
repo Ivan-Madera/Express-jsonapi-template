@@ -3,8 +3,10 @@ import {
   type IJsonResponseApiData,
   type IJsonApiData,
   type IJsonResponseApiMessage,
-  type IJsonResponseApiError
+  type IJsonResponseApiError,
+  type IJsonResponseApiGeneric
 } from '../interfaces/jsonResponseApi.dtos'
+import { ErrorTitles } from './ErrorTitles'
 
 export const JsonResponseApiData = (
   type: string,
@@ -63,7 +65,6 @@ export const JsonResponseApiError = (
   status: number,
   pointer: string,
   suggestions: string,
-  title: string,
   detail: any
 ): IJsonResponseApiError => {
   return {
@@ -72,7 +73,20 @@ export const JsonResponseApiError = (
       pointer
     },
     suggestedActions: suggestions,
-    title,
+    title: ErrorTitles[status],
     detail: detail.message
+  }
+}
+
+export const JsonResponseApiGeneric = (
+  status: number,
+  response:
+    | IJsonResponseApiData
+    | IJsonResponseApiMessage
+    | IJsonResponseApiError
+): IJsonResponseApiGeneric => {
+  return {
+    status,
+    response
   }
 }

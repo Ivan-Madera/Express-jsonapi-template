@@ -1,12 +1,8 @@
 import { type Handler } from 'express'
 import { createDiaries, getDiaries } from '../services/diaries.service'
 import { Codes } from '../utils/CodeStatus'
-import {
-  JsonResponseApiData,
-  JsonResponseApiError
-} from '../utils/JsonResponseApi'
+import { JsonResponseApiError } from '../utils/JsonResponseApi'
 import { ErrorSugestions } from '../utils/ErrorSugestions'
-import { ErrorTitles } from '../utils/ErrorTitles'
 
 export const diaries: Handler = (req, res) => {
   return res.send(getDiaries())
@@ -23,23 +19,13 @@ export const diariesCreate: Handler = (req, res) => {
       }
     } = req
 
-    const responseService = createDiaries(attributes)
+    const responseService = createDiaries(url, attributes)
 
-    status = Codes.success
-    res
-      .status(status)
-      .json(JsonResponseApiData('diaries', responseService, url))
+    status = responseService.status
+    res.status(status).json(responseService.response)
   } catch (error) {
     res
       .status(status)
-      .json(
-        JsonResponseApiError(
-          status,
-          url,
-          ErrorSugestions.generic,
-          ErrorTitles[status],
-          error
-        )
-      )
+      .json(JsonResponseApiError(status, url, ErrorSugestions.generic, error))
   }
 }
