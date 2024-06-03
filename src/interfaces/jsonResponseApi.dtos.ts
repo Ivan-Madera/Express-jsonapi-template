@@ -16,7 +16,7 @@ export interface IJsonResponseApiMessage {
   data: {
     type: string
     id: string
-    attributes: any
+    attributes: { message: string }
     links: {
       self: string
     }
