@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  app:
+    build: .
+    expose:
+      - ${PORT}
+    ports:
+      - ${PORT}:${PORT}
+    restart: always
+    environment:
+      ENV: ${ENV}
+      PORT: ${PORT}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      TOKEN: ${TOKEN}
+      SECRET_KEY: ${SECRET_KEY}
