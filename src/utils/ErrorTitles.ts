@@ -1,7 +1,7 @@
 export const ErrorTitles = {
-  400: 'BAD REQUEST',
-  500: 'INTERNAL SERVER ERROR',
-  401: 'UNAUTHORIZED',
-  415: 'UNSUPPORTED MEDIA TYPE',
-  422: 'UNPROCESSABLE CONTENT'
+  400: 'Solicitud Incorrecta',
+  500: 'Error Interno Del Servidor',
+  401: 'No Autorizado',
+  415: 'Tipo De Medio No Soportado',
+  422: 'Contenido No Procesable'
 }

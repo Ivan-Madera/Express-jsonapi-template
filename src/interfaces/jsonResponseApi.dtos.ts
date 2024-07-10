@@ -24,6 +24,7 @@ export interface IJsonResponseApiMessage {
 }
 
 export interface IJsonResponseApiError {
+  code: string
   status: number
   source: {
     pointer: string

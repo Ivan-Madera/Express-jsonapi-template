@@ -7,6 +7,7 @@ import {
   type IJsonResponseApiGeneric
 } from '../interfaces/jsonResponseApi.dtos'
 import { ErrorTitles } from './ErrorTitles'
+import { ErrorCodes } from './ErrorCodes'
 
 export const JsonResponseApiData = (
   type: string,
@@ -68,6 +69,7 @@ export const JsonResponseApiError = (
   detail: any
 ): IJsonResponseApiError => {
   return {
+    code: ErrorCodes[status],
     status,
     source: {
       pointer
@@ -98,6 +100,7 @@ export const JsonResponseApiValidator = (
   detail: string
 ): IJsonResponseApiError => {
   return {
+    code: ErrorCodes[status],
     status,
     source: {
       pointer
