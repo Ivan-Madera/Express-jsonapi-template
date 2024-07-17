@@ -5,7 +5,6 @@ import {
   rollbackTrasaction
 } from '../database/transactions'
 import {
-  type IResponseMessage,
   type IErrorObject,
   type ISuccessObject
 } from '../interfaces/jsonResponses.dtos'
@@ -16,12 +15,16 @@ import {
 } from '../repositories/mutations/user.mutations'
 import { findAllUsers } from '../repositories/queries/user.queries'
 import { Codes } from '../utils/CodeStatus'
-import {
-  ErrorObject,
-  ResponseMessage,
-  SuccessObject
-} from '../utils/JsonResponses'
+import { ErrorObject, SuccessObject } from '../utils/JsonResponses'
 import { sign } from 'jsonwebtoken'
+import { type IJsonResponseApiGeneric } from '../interfaces/jsonResponseApi.dtos'
+import {
+  JsonResponseApiData,
+  JsonResponseApiError,
+  JsonResponseApiGeneric,
+  JsonResponseApiMessage
+} from '../utils/JsonResponseApi'
+import { ErrorSugestions } from '../utils/ErrorSugestions'
 
 export const getAccessTokenService = async (): Promise<
   ISuccessObject | IErrorObject
@@ -42,24 +45,30 @@ export const getAccessTokenService = async (): Promise<
   }
 }
 
-export const getUsersService = async (): Promise<
-  ISuccessObject | IErrorObject
-> => {
+export const getUsersService = async (
+  url: string
+): Promise<IJsonResponseApiGeneric> => {
   let status = Codes.errorServer
 
   try {
-    const findUser = await findAllUsers()
-
+    const findAll = await findAllUsers()
     status = Codes.success
-    return SuccessObject(findUser, status)
+    return JsonResponseApiGeneric(
+      status,
+      JsonResponseApiData('users', findAll, url)
+    )
   } catch (error) {
-    return ErrorObject(error, status)
+    return JsonResponseApiGeneric(
+      status,
+      JsonResponseApiError(status, url, ErrorSugestions.generic, error)
+    )
   }
 }
 
 export const createUserService = async (
+  url: string,
   userObj: IUserObj
-): Promise<ISuccessObject | IErrorObject> => {
+): Promise<IJsonResponseApiGeneric> => {
   let status = Codes.errorServer
   const t = await manageTransaction()
 
@@ -68,17 +77,24 @@ export const createUserService = async (
 
     await commitTrasaction(t)
     status = Codes.success
-    return SuccessObject(findCreate, status)
+    return JsonResponseApiGeneric(
+      status,
+      JsonResponseApiData('users', findCreate, url)
+    )
   } catch (error) {
     await rollbackTrasaction(t, 'createUserService')
-    return ErrorObject(error, status)
+    return JsonResponseApiGeneric(
+      status,
+      JsonResponseApiError(status, url, ErrorSugestions.generic, error)
+    )
   }
 }
 
 export const updateUserService = async (
+  url: string,
   nombres: string,
   usuario: string
-): Promise<IResponseMessage | IErrorObject> => {
+): Promise<IJsonResponseApiGeneric> => {
   let status = Codes.errorServer
   const message = 'Usuario actualizado con exito'
   const t = await manageTransaction()
@@ -96,9 +112,15 @@ export const updateUserService = async (
 
     await commitTrasaction(t)
     status = Codes.success
-    return ResponseMessage(message, status)
+    return JsonResponseApiGeneric(
+      status,
+      JsonResponseApiMessage('users', message, url)
+    )
   } catch (error) {
     await rollbackTrasaction(t, 'updateUserService')
-    return ErrorObject(error, status)
+    return JsonResponseApiGeneric(
+      status,
+      JsonResponseApiError(status, url, ErrorSugestions.generic, error)
+    )
   }
 }
