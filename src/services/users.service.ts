@@ -1,4 +1,3 @@
-import env from './../config/callenv'
 import {
   commitTrasaction,
   manageTransaction,
@@ -25,6 +24,7 @@ import {
   JsonResponseApiMessage
 } from '../utils/JsonResponseApi'
 import { ErrorSugestions } from '../utils/ErrorSugestions'
+import { env } from '../config/callenv'
 
 export const getAccessTokenService = async (): Promise<
   ISuccessObject | IErrorObject

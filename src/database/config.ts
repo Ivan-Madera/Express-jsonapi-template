@@ -1,5 +1,5 @@
-import env from './../config/callenv'
 import { Sequelize } from 'sequelize'
+import { env } from '../config/callenv'
 
 const DB_PORT = parseInt(env.DB_PORT as string)
 

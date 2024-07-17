@@ -1,8 +1,8 @@
 import { Codes } from '../utils/CodeStatus'
-import env from '../config/callenv'
 import { verify } from 'jsonwebtoken'
 import { JsonResponseApiError } from '../utils/JsonResponseApi'
 import { ErrorSugestions } from '../utils/ErrorSugestions'
+import { env } from '../config/callenv'
 
 export const jsonAPIValidator = (req: any, res: any, next: any): any => {
   const url = req.originalUrl
