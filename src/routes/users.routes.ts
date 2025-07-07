@@ -4,7 +4,7 @@ import {
   getAccessToken,
   getUsers,
   updateUser
-} from '../controllers/user.controller'
+} from '../controllers/users.controller'
 import {
   checkAuth,
   checkBearer,

@@ -1,5 +1,5 @@
 import { type Handler } from 'express'
-import { createDiaries, getDiaries } from '../services/diary.service'
+import { createDiaries, getDiaries } from '../services/diaries.service'
 import { Codes } from '../utils/codeStatus'
 import { JsonApiResponseError } from '../utils/jsonApiResponse'
 import { ErrorSugestions } from '../utils/errorSugestions'
