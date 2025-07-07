@@ -1,4 +1,4 @@
-import { type INewDiaryEntry } from '../entities/diary.entity'
+import { type INewDiaryEntry } from '../entities/diaries.entities'
 import { type IJsonApiResponseGeneric } from '../entities/jsonApiResponse.entity'
 import diariesData from '../json/diary.json'
 import { Codes } from '../utils/codeStatus'
