@@ -9,7 +9,8 @@ import { sequelize } from '../database/config'
 import helmet from 'helmet'
 import env from './callEnv'
 import { LogInfo } from '../utils/logger'
-import { headerNoCache } from '../middlewares/shared.middleware'
+import { baseRoute, headerNoCache } from '../middlewares/shared.middleware'
+import { helmetContentSecurityPolicy, helmetTransportSecurity } from './helmet'
 
 class Server {
   public app: Application
@@ -33,21 +34,8 @@ class Server {
     this.app.use(helmet.noSniff())
     this.app.use(helmet.hidePoweredBy())
     this.app.use(helmet.frameguard({ action: 'deny' }))
-    this.app.use(
-      helmet.hsts({
-        maxAge: 63072000,
-        includeSubDomains: true,
-        preload: true
-      })
-    )
-    this.app.use(
-      helmet.contentSecurityPolicy({
-        directives: {
-          defaultSrc: ["'self'"],
-          frameAncestors: ["'none'"]
-        }
-      })
-    )
+    this.app.use(helmet.hsts(helmetTransportSecurity))
+    this.app.use(helmet.contentSecurityPolicy(helmetContentSecurityPolicy))
   }
 
   middlewares(): void {
@@ -58,11 +46,13 @@ class Server {
   }
 
   swagger(): void {
-    this.app.use(
-      '/docs',
-      swaggerUI.serve,
-      swaggerUI.setup(swaggerJSDoc(options))
-    )
+    if (env.ENV !== 'production') {
+      this.app.use(
+        '/docs',
+        swaggerUI.serve,
+        swaggerUI.setup(swaggerJSDoc(options))
+      )
+    }
   }
 
   routes(): void {
@@ -71,16 +61,12 @@ class Server {
   }
 
   listen(): void {
-    this.app.get('/', (_req, res) => {
-      res.send(
-        `[${new Date().toLocaleString('es-MX', {
-          hour12: false
-        })}] | Servicio funcionando`
-      )
-    })
+    this.app.get('/', baseRoute)
 
     this.app.listen(env.PORT, () => {
-      LogInfo(`Server listening on http://127.0.0.1:${env.PORT}/docs`)
+      env.ENV === 'production'
+        ? LogInfo(`Server running in ${env.ENV} environment`)
+        : LogInfo(`Server listening on http://127.0.0.1:${env.PORT}/docs`)
     })
   }
 

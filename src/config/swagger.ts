@@ -6,7 +6,7 @@ export const options = {
     info: {
       title: 'API TEMPLATE JSONAPI',
       version: '1.0.0',
-      description: 'API DOCUMENTACIÓN'
+      description: 'API documentation made with ❤ by Ivan Madera'
     },
     servers: [
       {
