@@ -1,6 +1,6 @@
 import { type INewDiaryEntry } from '../entities/diaries.entities'
-import { type IJsonApiResponseGeneric } from '../entities/jsonApiResponse.entity'
-import diariesData from '../json/diary.json'
+import { type IJsonApiResponseGeneric } from '../entities/jsonApiResponses.entities'
+import diariesData from '../json/diaries.json'
 import { Codes } from '../utils/codeStatus'
 import { ErrorSugestions } from '../utils/errorSugestions'
 import {

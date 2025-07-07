@@ -4,10 +4,13 @@ import {
   manageTransaction,
   rollbackTransaction
 } from '../database/transaction'
-import { type IJsonApiResponseGeneric } from '../entities/jsonApiResponse.entity'
+import { type IJsonApiResponseGeneric } from '../entities/jsonApiResponses.entities'
 import { type IUserObj } from '../entities/users.entities'
-import { createUser, updateUser } from '../repositories/mutations/user.mutation'
-import { findAllUsers } from '../repositories/queries/user.query'
+import {
+  createUser,
+  updateUser
+} from '../repositories/mutations/user.mutations'
+import { findAllUsers } from '../repositories/queries/user.queries'
 import { Codes } from '../utils/codeStatus'
 import { ErrorSugestions } from '../utils/errorSugestions'
 import {

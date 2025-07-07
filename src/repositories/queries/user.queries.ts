@@ -1,5 +1,5 @@
 import { type Attributes, type FindOptions } from 'sequelize'
-import User, { type UserInstance } from '../../database/models/user.model'
+import User, { type UserInstance } from '../../database/models/User.model'
 
 export const findOneUser = async (
   usuario: string,

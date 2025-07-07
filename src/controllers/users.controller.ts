@@ -4,7 +4,7 @@ import {
   getAccessTokenService,
   getUsersService,
   updateUserService
-} from '../services/user.service'
+} from '../services/users.service'
 import { Codes } from '../utils/codeStatus'
 import { JsonApiResponseError } from '../utils/jsonApiResponse'
 import { ErrorSugestions } from '../utils/errorSugestions'

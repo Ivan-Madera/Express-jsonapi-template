@@ -6,7 +6,7 @@ import {
 import User, {
   type UserInstance,
   type UserCreationAttributes
-} from '../../database/models/user.model'
+} from '../../database/models/User.model'
 
 export const createUser = async (
   values: UserCreationAttributes,

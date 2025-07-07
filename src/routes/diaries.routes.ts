@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { diaries, diariesCreate } from '../controllers/diary.controller'
-import { diariesCreateValidator } from '../validators/diary.validator'
+import { diaries, diariesCreate } from '../controllers/diaries.controller'
+import { diariesCreateValidator } from '../validators/diaries.validators'
 const router = Router()
 
 /**

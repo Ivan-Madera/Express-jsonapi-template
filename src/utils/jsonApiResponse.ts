@@ -5,7 +5,7 @@ import {
   type IJsonApiResponseError,
   type IJsonApiResponseGeneric,
   type IJsonApiResponseMessage
-} from '../entities/jsonApiResponse.entity'
+} from '../entities/jsonApiResponses.entities'
 import { ErrorTitles } from './errorTitles'
 import { ErrorCodes } from './errorCodes'
 
