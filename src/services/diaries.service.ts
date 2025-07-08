@@ -2,7 +2,6 @@ import { type INewDiaryEntry } from '../entities/diaries.entities'
 import { type IJsonApiResponseGeneric } from '../entities/jsonApiResponses.entities'
 import diariesData from '../json/diaries.json'
 import { Codes } from '../utils/codeStatus'
-import { ErrorSugestions } from '../utils/errorSugestions'
 import {
   JsonApiResponseData,
   JsonApiResponseError,
@@ -19,10 +18,7 @@ export const getDiaries = (url: string): IJsonApiResponseGeneric => {
       JsonApiResponseData('diaries', diariesData, url)
     )
   } catch (error) {
-    return JsonApiResponseGeneric(
-      status,
-      JsonApiResponseError(status, url, ErrorSugestions.generic, error)
-    )
+    return JsonApiResponseGeneric(status, JsonApiResponseError(error, url))
   }
 }
 
@@ -46,9 +42,6 @@ export const createDiaries = (
       JsonApiResponseData('diaries', newDiary, url)
     )
   } catch (error) {
-    return JsonApiResponseGeneric(
-      status,
-      JsonApiResponseError(status, url, ErrorSugestions.generic, error)
-    )
+    return JsonApiResponseGeneric(status, JsonApiResponseError(error, url))
   }
 }

@@ -8,7 +8,8 @@ import {
 import {
   checkAuth,
   checkBearer,
-  jsonApiValidator
+  contentTypeValidator,
+  methodValidator
 } from '../middlewares/authentication.middleware'
 
 const router = Router()
@@ -26,10 +27,18 @@ const router = Router()
 /**
  * @swagger
  * /api/v1/accesstoken:
- *   get:
+ *   post:
  *     tags: ["[V1] Users"]
  *     summary: Obtener el accesstoken
  *     description: Obtiene el accesstoken para los endpoint.
+ *     parameters:
+ *      - in: header
+ *        name: token
+ *        description: token de autenticacion
+ *        type: string
+ *     requestBody:
+ *       content:
+ *         application/vnd.api+json:
  *     responses:
  *       200:
  *         description: Request exitoso.
@@ -44,12 +53,12 @@ const router = Router()
  *       500:
  *         description: Mensaje de error.
  */
-router.get('/accesstoken', [], getAccessToken)
+router.post('/accesstoken', [checkAuth], getAccessToken)
 
 /**
  * @swagger
- * /api/v1/users:
- *   get:
+ * /api/v1/users/get:
+ *   post:
  *     tags: ["[V1] Users"]
  *     security:
  *     - bearerAuth: []
@@ -60,6 +69,9 @@ router.get('/accesstoken', [], getAccessToken)
  *        name: Authorization
  *        description: Bearer token de autenticacion
  *        type: string
+ *     requestBody:
+ *       content:
+ *         application/vnd.api+json:
  *     responses:
  *       200:
  *         description: Request exitoso.
@@ -74,21 +86,26 @@ router.get('/accesstoken', [], getAccessToken)
  *       500:
  *         description: Mensaje de error.
  */
-router.get('/users', [checkBearer], getUsers)
+router.post(
+  '/users/get',
+  [methodValidator, contentTypeValidator, checkBearer],
+  getUsers
+)
 
 /**
  * @swagger
  * /api/v1/users:
  *   post:
  *     tags: ["[V1] Users"]
+ *     security:
+ *     - bearerAuth: []
  *     summary: Crea un nuevo usuario
  *     parameters:
  *      - in: header
- *        name: token
- *        description: token de autenticacion
+ *        name: Authorization
+ *        description: Bearer token de autenticacion
  *        type: string
  *     requestBody:
- *       required: true
  *       content:
  *         application/vnd.api+json:
  *           schema:
@@ -135,21 +152,26 @@ router.get('/users', [checkBearer], getUsers)
  *       500:
  *         description: Mensaje de error.
  */
-router.post('/users', [jsonApiValidator, checkAuth], createUser)
+router.post(
+  '/users',
+  [methodValidator, contentTypeValidator, checkBearer],
+  createUser
+)
 
 /**
  * @swagger
  * /api/v1/users:
  *   patch:
  *     tags: ["[V1] Users"]
+ *     security:
+ *     - bearerAuth: []
  *     summary: Actualiza un usuario existente
  *     parameters:
  *      - in: header
- *        name: token
- *        description: token de autenticacion
+ *        name: Authorization
+ *        description: Bearer token de autenticacion
  *        type: string
  *     requestBody:
- *       required: true
  *       content:
  *         application/vnd.api+json:
  *           schema:
@@ -182,6 +204,10 @@ router.post('/users', [jsonApiValidator, checkAuth], createUser)
  *       500:
  *         description: Mensaje de error.
  */
-router.patch('/users', [jsonApiValidator, checkAuth], updateUser)
+router.patch(
+  '/users',
+  [methodValidator, contentTypeValidator, checkBearer],
+  updateUser
+)
 
 export { router as Users }
