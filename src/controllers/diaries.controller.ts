@@ -2,7 +2,6 @@ import { type Handler } from 'express'
 import { createDiaries, getDiaries } from '../services/diaries.service'
 import { Codes } from '../utils/codeStatus'
 import { JsonApiResponseError } from '../utils/jsonApiResponse'
-import { ErrorSugestions } from '../utils/errorSugestions'
 
 export const diaries: Handler = (req, res) => {
   const url = req.originalUrl
@@ -14,9 +13,7 @@ export const diaries: Handler = (req, res) => {
     status = responseService.status
     return res.status(status).json(responseService.response)
   } catch (error) {
-    res
-      .status(status)
-      .json(JsonApiResponseError(status, url, ErrorSugestions.generic, error))
+    res.status(status).json(JsonApiResponseError(error, url))
   }
 }
 
@@ -36,8 +33,6 @@ export const diariesCreate: Handler = (req, res) => {
     status = responseService.status
     return res.status(status).json(responseService.response)
   } catch (error) {
-    res
-      .status(status)
-      .json(JsonApiResponseError(status, url, ErrorSugestions.generic, error))
+    res.status(status).json(JsonApiResponseError(error, url))
   }
 }

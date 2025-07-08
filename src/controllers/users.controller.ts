@@ -7,7 +7,6 @@ import {
 } from '../services/users.service'
 import { Codes } from '../utils/codeStatus'
 import { JsonApiResponseError } from '../utils/jsonApiResponse'
-import { ErrorSugestions } from '../utils/errorSugestions'
 
 export const getAccessToken: Handler = async (req, res) => {
   const url = req.originalUrl
@@ -19,9 +18,7 @@ export const getAccessToken: Handler = async (req, res) => {
     status = responseService.status
     return res.status(status).json(responseService.response)
   } catch (error) {
-    res
-      .status(status)
-      .json(JsonApiResponseError(status, url, ErrorSugestions.generic, error))
+    res.status(status).json(JsonApiResponseError(error, url))
   }
 }
 
@@ -35,9 +32,7 @@ export const getUsers: Handler = async (req, res) => {
     status = responseService.status
     return res.status(status).json(responseService.response)
   } catch (error) {
-    res
-      .status(status)
-      .json(JsonApiResponseError(status, url, ErrorSugestions.generic, error))
+    res.status(status).json(JsonApiResponseError(error, url))
   }
 }
 
@@ -57,9 +52,7 @@ export const createUser: Handler = async (req, res) => {
     status = responseService.status
     return res.status(status).json(responseService.response)
   } catch (error) {
-    res
-      .status(status)
-      .json(JsonApiResponseError(status, url, ErrorSugestions.generic, error))
+    res.status(status).json(JsonApiResponseError(error, url))
   }
 }
 
@@ -81,8 +74,6 @@ export const updateUser: Handler = async (req, res) => {
     status = responseService.status
     return res.status(status).json(responseService.response)
   } catch (error) {
-    res
-      .status(status)
-      .json(JsonApiResponseError(status, url, ErrorSugestions.generic, error))
+    res.status(status).json(JsonApiResponseError(error, url))
   }
 }

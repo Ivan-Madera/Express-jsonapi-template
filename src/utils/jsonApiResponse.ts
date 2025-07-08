@@ -6,8 +6,7 @@ import {
   type IJsonApiResponseGeneric,
   type IJsonApiResponseMessage
 } from '../entities/jsonApiResponses.entities'
-import { ErrorTitles } from './errorTitles'
-import { ErrorCodes } from './errorCodes'
+import { Codes } from './codeStatus'
 
 export const JsonApiResponseData = (
   type: string,
@@ -63,20 +62,25 @@ export const JsonApiResponseMessage = (
 }
 
 export const JsonApiResponseError = (
-  status: number,
-  pointer: string,
-  suggestions: string,
-  detail: any
+  error: any,
+  url: string
 ): IJsonApiResponseError => {
+  const code = error.code || 'ERROR-000'
+  const status = error.status || 500
+  const pointer = url
+  const suggestions = error.suggestions || 'Please try again later'
+  const title = error.title || 'Internal Server Error'
+  const message = error.message || 'An unknown error occurred'
+
   return {
-    code: ErrorCodes[status],
+    code,
     status,
     source: {
       pointer
     },
     suggestedActions: suggestions,
-    title: ErrorTitles[status],
-    detail: detail.message
+    title,
+    detail: message
   }
 }
 
@@ -94,19 +98,17 @@ export const JsonApiResponseGeneric = (
 }
 
 export const JsonApiResponseValidator = (
-  status: number,
   pointer: string,
-  suggestions: string,
   detail: string
 ): IJsonApiResponseError => {
   return {
-    code: ErrorCodes[status],
-    status,
+    code: 'ERROR-001',
+    status: Codes.unprocessableContent,
     source: {
       pointer
     },
-    suggestedActions: suggestions,
-    title: ErrorTitles[status],
+    suggestedActions: 'Check the body of the request.',
+    title: 'Invalid request body.',
     detail
   }
 }

@@ -5,6 +5,7 @@ export const Codes = {
   noContent: 204,
   badRequest: 400,
   unauthorized: 401,
+  notAcceptable: 406,
   unsupportedMedia: 415,
   unprocessableContent: 422,
   errorServer: 500
