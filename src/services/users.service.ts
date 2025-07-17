@@ -17,7 +17,7 @@ import {
   JsonApiResponseError,
   JsonApiResponseGeneric,
   JsonApiResponseMessage
-} from '../utils/jsonApiResponse'
+} from '../utils/jsonApiResponses'
 import { sign } from 'jsonwebtoken'
 
 export const getAccessTokenService = async (

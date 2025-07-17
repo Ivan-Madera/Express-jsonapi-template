@@ -1,6 +1,6 @@
 import { validationResult } from 'express-validator'
 import { Codes } from '../utils/codeStatus'
-import { JsonApiResponseValidator } from '../utils/jsonApiResponse'
+import { JsonApiResponseValidator } from '../utils/jsonApiResponses'
 
 export const validateResult = (req: any, res: any, next: any): any => {
   const url = req.originalUrl

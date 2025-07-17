@@ -1,7 +1,7 @@
 import { type Handler } from 'express'
 import { createDiaries, getDiaries } from '../services/diaries.service'
 import { Codes } from '../utils/codeStatus'
-import { JsonApiResponseError } from '../utils/jsonApiResponse'
+import { JsonApiResponseError } from '../utils/jsonApiResponses'
 
 export const diaries: Handler = (req, res) => {
   const url = req.originalUrl

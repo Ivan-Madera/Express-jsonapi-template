@@ -1,5 +1,5 @@
 import { Codes } from '../utils/codeStatus'
-import { JsonApiResponseError } from '../utils/jsonApiResponse'
+import { JsonApiResponseError } from '../utils/jsonApiResponses'
 
 export const baseRoute = (_req: any, res: any, _next: any): void => {
   return res.send(`

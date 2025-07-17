@@ -6,7 +6,7 @@ import {
   JsonApiResponseData,
   JsonApiResponseError,
   JsonApiResponseGeneric
-} from '../utils/jsonApiResponse'
+} from '../utils/jsonApiResponses'
 
 export const getDiaries = (url: string): IJsonApiResponseGeneric => {
   let status = Codes.errorServer

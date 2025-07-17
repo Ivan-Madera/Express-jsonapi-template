@@ -2,7 +2,7 @@ import env from '../config/callEnv'
 import { validationErrors } from '../errors/validation.errors'
 import { Codes } from '../utils/codeStatus'
 import { ErrorException } from '../utils/Exceptions'
-import { JsonApiResponseError } from '../utils/jsonApiResponse'
+import { JsonApiResponseError } from '../utils/jsonApiResponses'
 import { verify } from 'jsonwebtoken'
 
 export const checkAuth = (req: any, res: any, next: any): any => {

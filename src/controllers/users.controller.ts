@@ -6,7 +6,7 @@ import {
   updateUserService
 } from '../services/users.service'
 import { Codes } from '../utils/codeStatus'
-import { JsonApiResponseError } from '../utils/jsonApiResponse'
+import { JsonApiResponseError } from '../utils/jsonApiResponses'
 
 export const getAccessToken: Handler = async (req, res) => {
   const url = req.originalUrl
