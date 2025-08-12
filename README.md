@@ -211,7 +211,7 @@ Para el despliegue en producción, asegúrate de:
 
 ### Base URL
 ```
-http://localhost:3000/api/v1
+https://api.example.com/api/v1
 ```
 
 ### Autenticación
@@ -224,12 +224,12 @@ Authorization: Bearer <token>
 
 #### [V1] Users
 
-| Método | Ruta                 | Descripción                   | Autenticación |
-|--------|----------------------|-------------------------------|---------------|
-| POST   | /api/v1/accesstoken  | Obtiene token JWT de acceso   | ❌            |
-| POST   | /api/v1/users/get    | Obtiene usuarios activos      | ✅            |
-| POST   | /api/v1/users        | Registra nuevo usuario        | ✅            |
-| PATCH  | /api/v1/users        | Actualiza usuario existente   | ✅            |
+| Método | Ruta          | Descripción                   | Autenticación |
+|--------|---------------|-------------------------------|---------------|
+| POST   | /accesstoken  | Obtiene token JWT de acceso   | ❌            |
+| POST   | /users/get    | Obtiene usuarios activos      | ✅            |
+| POST   | /users        | Registra nuevo usuario        | ✅            |
+| PATCH  | /users        | Actualiza usuario existente   | ✅            |
 
 ## 📝 Licencia
 
