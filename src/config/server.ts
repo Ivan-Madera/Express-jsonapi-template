@@ -1,80 +1,83 @@
 import express, { type Application } from 'express'
 import cors from 'cors'
-import { Diaries } from '../routes/diaries.routes'
-import { Users } from '../routes/users.routes'
+import helmet from 'helmet'
 import swaggerUI from 'swagger-ui-express'
 import swaggerJSDoc from 'swagger-jsdoc'
-import { options } from './swagger'
+import { Diaries } from '../routes/diaries.routes'
+import { Users } from '../routes/users.routes'
 import { sequelize } from '../database/config'
-import helmet from 'helmet'
-import env from './callEnv'
 import { LogInfo } from '../utils/logger'
 import { baseRoute, headerNoCache } from '../middlewares/shared.middleware'
 import { helmetContentSecurityPolicy, helmetTransportSecurity } from './helmet'
+import { custom, options } from './swagger'
+import env from './callEnv'
 
 class Server {
   public app: Application
-  public service: Application
   readonly pathV1 = '/api/v1'
 
   constructor() {
-    // file deepcode ignore UseCsurfForExpress
     this.app = express()
-    this.service = this.app
-    this.configuration()
-    this.middlewares()
-    this.swagger()
-    this.routes()
+    this.initialize()
   }
 
-  configuration(): void {
-    this.app.set('port', env.PORT)
-    this.app.use(helmet())
-    this.app.use(helmet.xssFilter())
-    this.app.use(helmet.noSniff())
-    this.app.use(helmet.hidePoweredBy())
-    this.app.use(helmet.frameguard({ action: 'deny' }))
-    this.app.use(helmet.hsts(helmetTransportSecurity))
-    this.app.use(helmet.contentSecurityPolicy(helmetContentSecurityPolicy))
+  private initialize(): void {
+    this.configureSecurity()
+    this.configureMiddlewares()
+    this.configureSwagger()
+    this.configureRoutes()
   }
 
-  middlewares(): void {
+  private configureSecurity(): void {
+    this.app.use(
+      helmet({
+        contentSecurityPolicy: helmetContentSecurityPolicy,
+        hsts: helmetTransportSecurity,
+        frameguard: { action: 'deny' }
+      })
+    )
+  }
+
+  private configureMiddlewares(): void {
     this.app.use(cors())
     this.app.use(headerNoCache)
     this.app.use(express.json({ type: 'application/vnd.api+json' }))
     this.app.use(express.urlencoded({ extended: true }))
   }
 
-  swagger(): void {
+  private configureSwagger(): void {
     if (env.ENV !== 'production') {
       this.app.use(
         '/docs',
         swaggerUI.serve,
-        swaggerUI.setup(swaggerJSDoc(options))
+        swaggerUI.setup(swaggerJSDoc(options), custom)
       )
     }
   }
 
-  routes(): void {
+  private configureRoutes(): void {
     this.app.use(this.pathV1, Diaries)
     this.app.use(this.pathV1, Users)
   }
 
-  listen(): void {
+  public listen(): void {
     this.app.get('/', baseRoute)
 
     this.app.listen(env.PORT, () => {
-      env.ENV === 'production'
-        ? LogInfo(`Server running in ${env.ENV} environment`)
-        : LogInfo(`Server listening on http://127.0.0.1:${env.PORT}/docs`)
+      const message =
+        env.ENV === 'production'
+          ? `Server running in ${env.ENV} environment`
+          : `Server listening on http://127.0.0.1:${env.PORT}/docs`
+
+      LogInfo(message)
     })
   }
 
-  getService(): Application {
-    return this.service
+  public getService(): Application {
+    return this.app
   }
 
-  async close(): Promise<void> {
+  public async close(): Promise<void> {
     await sequelize.close()
   }
 }

@@ -13,7 +13,7 @@ export const diaries: Handler = (req, res) => {
     status = responseService.status
     return res.status(status).json(responseService.response)
   } catch (error) {
-    res.status(status).json(JsonApiResponseError(error, url))
+    return res.status(status).json(JsonApiResponseError(error, url))
   }
 }
 
@@ -33,6 +33,6 @@ export const diariesCreate: Handler = (req, res) => {
     status = responseService.status
     return res.status(status).json(responseService.response)
   } catch (error) {
-    res.status(status).json(JsonApiResponseError(error, url))
+    return res.status(status).json(JsonApiResponseError(error, url))
   }
 }

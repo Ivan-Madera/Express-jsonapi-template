@@ -18,7 +18,7 @@ export const getAccessToken: Handler = async (req, res) => {
     status = responseService.status
     return res.status(status).json(responseService.response)
   } catch (error) {
-    res.status(status).json(JsonApiResponseError(error, url))
+    return res.status(status).json(JsonApiResponseError(error, url))
   }
 }
 
@@ -32,7 +32,7 @@ export const getUsers: Handler = async (req, res) => {
     status = responseService.status
     return res.status(status).json(responseService.response)
   } catch (error) {
-    res.status(status).json(JsonApiResponseError(error, url))
+    return res.status(status).json(JsonApiResponseError(error, url))
   }
 }
 
@@ -52,7 +52,7 @@ export const createUser: Handler = async (req, res) => {
     status = responseService.status
     return res.status(status).json(responseService.response)
   } catch (error) {
-    res.status(status).json(JsonApiResponseError(error, url))
+    return res.status(status).json(JsonApiResponseError(error, url))
   }
 }
 
@@ -74,6 +74,6 @@ export const updateUser: Handler = async (req, res) => {
     status = responseService.status
     return res.status(status).json(responseService.response)
   } catch (error) {
-    res.status(status).json(JsonApiResponseError(error, url))
+    return res.status(status).json(JsonApiResponseError(error, url))
   }
 }
