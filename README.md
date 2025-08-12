@@ -1,112 +1,246 @@
-# 📦 TEMPLATE NODEJS + JSONAPI
+# 🚀 EXPRESS-JSONAPI-TEMPLATE
 
-Template de NodeJS para desarrollos cortos y sencillos implementando las respuestas con jsonapi.
+Esta API está diseñada para ser utilizada por desarrolladores que requieran un template robusto y escalable para crear APIs REST siguiendo el estándar JSON:API. Proporciona una estructura completa con autenticación JWT, documentación Swagger automática, testing integrado y configuración para desarrollo y producción.
 
-## 📂 Tabla de Contenidos
+## 📋 Tabla de Contenidos
 
+- [🎯 Descripción](#-descripción)
 - [🛠️ Tecnologías](#-tecnologías)
-- [🗂️ Estructura del proyecto](#-estructura-del-proyecto)
-- [🚀 Instalación](#-instalación)
-- [🧪 Scripts disponibles](#-scripts-disponibles)
-- [🧾 Variables de entorno](#-variables-de-entorno)
-- [📡 Endpoints de la API](#-endpoints-de-la-api)
+- [📁 Estructura del Proyecto](#-estructura-del-proyecto)
+- [🚀 Instalación y Configuración](#-instalación-y-configuración)
+- [🐳 Docker](#-docker)
+- [☁️ Despliegue](#-despliegue)
+- [🧪 Scripts Disponibles](#-scripts-disponibles)
+- [🔧 Variables de Entorno](#-variables-de-entorno)
+- [📡 API Endpoints](#-api-endpoints)
 - [📝 Licencia](#-licencia)
+- [📞 Soporte](#-soporte)
+
+## 🎯 Descripción
+
+Este template actúa como base sólida para el desarrollo de APIs REST, proporcionando una estructura completa que permite:
+
+- Crear APIs siguiendo el estándar JSON:API
+- Implementar autenticación JWT segura
+- Generar documentación automática con Swagger
+- Manejar errores y respuestas estandarizadas
+- Ejecutar pruebas automatizadas con Jest
+- Gestionar base de datos con migraciones y seeders
+- Desplegar en contenedores Docker
 
 ## 🛠️ Tecnologías
 
-Este proyecto está construido con:
+### Backend
+- **[Node.js](https://nodejs.org/)** - Runtime de JavaScript
+- **[Express.js](https://expressjs.com/)** - Framework web
+- **[TypeScript](https://www.typescriptlang.org/)** - Superset de JavaScript con tipado estático
 
-- [Node.js](https://nodejs.org/)
-- [Express](https://expressjs.com/)
-- [MySQL](https://www.mysql.com/)
-- [Sequelize](https://sequelize.org/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Json:api](https://jsonapi.org/)
-- [Swagger](https://swagger.io/)
+### Base de Datos
+- **[MySQL](https://www.mysql.com/)** - Sistema de gestión de base de datos
+- **[Sequelize](https://sequelize.org/)** - ORM para Node.js
 
-## 📁 Estructura del proyecto
+### Seguridad y Validación
+- **[Helmet](https://helmetjs.github.io/)** - Middleware de seguridad
+- **[JWT](https://jwt.io/)** - Autenticación por tokens
+- **[Joi](https://joi.dev/)** - Validación de esquemas
+- **[Express Validator](https://express-validator.github.io/)** - Validación de datos
 
-```bash
+### Documentación y Testing
+- **[Swagger/OpenAPI](https://swagger.io/)** - Documentación de API
+- **[Jest](https://jestjs.io/)** - Framework de testing
+- **[Supertest](https://github.com/visionmedia/supertest)** - Testing de endpoints
+
+### Despliegue y DevOps
+- **[Docker](https://www.docker.com/)** - Containerización
+- **[Docker Compose](https://docs.docker.com/compose/)** - Orquestación de contenedores
+
+### Utilidades
+- **[Axios](https://axios-http.com/)** - Cliente HTTP
+- **[Log4js](https://log4js-node.github.io/)** - Logging
+- **[UUID](https://github.com/uuidjs/uuid)** - Generación de IDs únicos
+
+## 📁 Estructura del Proyecto
+
+```
+express-jsonapi-template/
 ├── src/
-│   ├── config/
-│   ├── controllers/
-│   ├── database/
-│   ├── entities/
-│   ├── errors/
-│   ├── middlewares/
-│   ├── repositories/
-│   ├── routes/
-│   ├── services/
-│   ├── tests/
-│   ├── utils/
-│   └── validators/
-├── app.ts
-├── .env
-├── .gitignore
-├── package.json
-└── README.md
+│   ├── config/         # Configuraciones de la aplicación
+│   ├── controllers/    # Controladores de la API
+│   ├── database/       # Configuración de base de datos
+│   ├── entities/       # Entidades de respuesta
+│   ├── errors/         # Manejo de errores personalizados
+│   ├── middlewares/    # Middlewares de Express
+│   ├── repositories/   # Capa de acceso a datos
+│   ├── routes/         # Definición de rutas
+│   ├── services/       # Lógica de negocio
+│   ├── tests/          # Pruebas unitarias e integración
+│   ├── utils/          # Utilidades y helpers
+│   └── validators/     # Validaciones de entrada
+├── app.ts              # Punto de entrada de la aplicación
+├── Dockerfile          # Configuración de Docker
+├── docker-compose.yaml # Orquestación de contenedores
+├── package.json        # Dependencias y scripts
+├── tsconfig.json       # Configuración de TypeScript
+└── jest.config.ts      # Configuración de Jest
 ```
 
-## 🚀 Instalación
+## 🚀 Instalación y Configuración
 
-Clona el repositorio e instala las dependencias:
+### Prerrequisitos
+
+- Node.js 18.x o superior
+- npm 9.x o superior
+- MySQL 8.0 o superior
+- Git
+
+### Instalación Local
+
+1. **Clona el repositorio:**
+   ```bash
+   git clone https://github.com/Ivan-Madera/Express-jsonapi-template.git
+   cd Express-jsonapi-template
+   ```
+
+2. **Instala las dependencias:**
+   ```bash
+   npm install
+   ```
+
+3. **Configura las variables de entorno:**
+   ```bash
+   cp .env.example .env
+   # Edita el archivo .env con tus valores
+   ```
+
+4. **Configura la base de datos:**
+   ```bash
+   npm run migrate
+   npm run seeder
+   ```
+
+5. **Compila el proyecto:**
+   ```bash
+   npm run build
+   ```
+
+6. **Ejecuta en modo desarrollo:**
+   ```bash
+   npm run dev
+   ```
+
+## 🐳 Docker
+
+### Construir la imagen
 
 ```bash
-git clone <https://github.com/Ivan-Madera/Express-jsonapi-template>
-cd Express-jsonapi-template
-npm install
+docker build -t express-jsonapi-template .
 ```
 
-## 🧪 Scripts disponibles
-
-Puedes utilizar los siguientes comandos:
+### Ejecutar con Docker
 
 ```bash
-npm run build             # Compila el proyecto TypeScript a JavaScript
-npm start                 # Ejecuta el servidor en producción
-npm run dev               # Ejecuta el servidor en modo desarrollo con ts-node-dev
-npm run jest              # Ejecuta las pruebas automatizadas con Jest
-npm run new:migration     # Genera un template para una nueva migración
-npm run new:seeder        # Genera un template para un nuevo seeder
-npm run migrate           # Ejecuta todas las migraciones nuevas
-npm run seeder            # Ejecuta todos los seeders nuevos
+docker run -p 3000:3000 --env-file .env express-jsonapi-template
 ```
 
-## 🧾 Variables de entorno
+### Usar Docker Compose
 
-Estas son las variables requeridas para que el proyecto funcione correctamente:
+```bash
+docker-compose up -d
+```
 
-| Variable         | Descripción                                                | Tipo      | Requerida |
-|------------------|------------------------------------------------------------|-----------|-----------|
-| `ENV`            | Entorno de ejecución                                       | string    | ✅        |
-| `PORT`           | Puerto en el que corre la aplicación                       | number    | ✅        |
-| `DB_DATABASE`    | Nombre de la base de datos                                 | string    | ✅        |
-| `DB_USERNAME`    | Usuario de la base de datos                                | string    | ✅        |
-| `DB_PASSWORD`    | Contraseña de la base de datos                             | string    | ✅        |
-| `DB_HOST`        | Host o IP del servidor de base de datos                    | string    | ✅        |
-| `DB_PORT`        | Puerto de conexión a la base de datos                      | number    | ✅        |
-| `TOKEN`          | Token de autenticacion                                     | string    | ✅        |
-| `SECRET_KEY`     | Clave secreta para firmar los tokens jwt                   | string    | ✅        |
-| `MAX_CONNECTION` | Número máximo de conexiones permitidas simultáneas         | number    | ❎        |
-| `MIN_CONNECTION` | Número mínimo de conexiones que se mantienen activas       | number    | ❎        |
-| `DB_ACQUIRE`     | Tiempo máximo (ms) para adquirir una conexión              | number    | ❎        |
-| `DB_IDLE`        | Tiempo máximo (ms) que una conexión puede estar inactiva   | number    | ❎        |
-| `DB_EVICT`       | Intervalo (ms) en el que se eliminan conexiones inactivas  | number    | ❎        |
+## ☁️ Despliegue
 
-## 📡 Endpoints de la API
+### Contenedores Docker
 
-### [V1] Users
+El proyecto está configurado para desplegarse en cualquier plataforma que soporte Docker:
 
-| Método | Ruta                 | Descripción                                                   | Autenticación |
-|--------|----------------------|---------------------------------------------------------------|---------------|
-| POST   | /api/v1/accesstoken  | Obtiene el token jwt de acceso a los endpoint                 | ✅            |
-| POST   | /api/v1/users/get    | Obtiene la información de los usuarios activos                | ✅            |
-| POST   | /api/v1/users        | Registra la información de un nuevo usuario                   | ✅            |
-| PATCH  | /api/v1/users        | Actualiza la información de un usuario exsitente              | ✅            |
+```bash
+# Construir imagen de producción
+docker build -t express-jsonapi-template:prod .
 
+# Ejecutar en producción
+docker run -d -p 3000:3000 --env-file .env.prod express-jsonapi-template:prod
+```
+
+### Configuración de Producción
+
+Para el despliegue en producción, asegúrate de:
+
+- Configurar variables de entorno de producción
+- Configurar base de datos de producción
+- Configurar logs y monitoreo
+- Configurar SSL/TLS si es necesario
+
+## 🧪 Scripts Disponibles
+
+| Comando                   | Descripción                               |
+|---------------------------|-------------------------------------------|
+| `npm run build`           | Compila TypeScript a JavaScript           |
+| `npm start`               | Ejecuta la aplicación en producción       |
+| `npm run dev`             | Ejecuta en modo desarrollo con hot-reload |
+| `npm test`                | Ejecuta todas las pruebas                 |
+| `npm run test:watch`      | Ejecuta pruebas en modo watch             |
+| `npm run lint`            | Verifica el código con ESLint             |
+| `npm run lint:fix`        | Corrige errores de ESLint automáticamente |
+| `npm run format`          | Formatea el código con Prettier           |
+| `npm run new:migration`   | Genera nueva migración                    |
+| `npm run new:seeder`      | Genera nuevo seeder                       |
+| `npm run migrate`         | Ejecuta migraciones pendientes            |
+| `npm run seeder`          | Ejecuta seeders pendientes                |
+
+## 🔧 Variables de Entorno
+
+| Variable         | Descripción                                | Tipo      | Requerida |
+|------------------|--------------------------------------------|-----------|-----------|
+| `ENV`            | Entorno de ejecución                       | string    | ✅        |
+| `PORT`           | Puerto del servidor                        | number    | ✅        |
+| `DB_DATABASE`    | Nombre de la base de datos                 | string    | ✅        |
+| `DB_USERNAME`    | Usuario de MySQL                           | string    | ✅        |
+| `DB_PASSWORD`    | Contraseña de MySQL                        | string    | ✅        |
+| `DB_HOST`        | Host de la base de datos                   | string    | ✅        |
+| `DB_PORT`        | Puerto de MySQL                            | number    | ✅        |
+| `TOKEN`          | Token secreto para autenticación           | string    | ✅        |
+| `SECRET_KEY`     | Clave para firmar JWT                      | string    | ✅        |
+| `MAX_CONNECTION` | Conexiones máximas simultáneas             | number    | ❌        |
+| `MIN_CONNECTION` | Conexiones mínimas activas                 | number    | ❌        |
+| `DB_ACQUIRE`     | Tiempo máximo para adquirir conexión (ms)  | number    | ❌        |
+| `DB_IDLE`        | Tiempo máximo de inactividad (ms)          | number    | ❌        |
+| `DB_EVICT`       | Intervalo de limpieza de conexiones (ms)   | number    | ❌        |
+
+## 📡 API Endpoints
+
+### Base URL
+```
+http://localhost:3000/api/v1
+```
+
+### Autenticación
+La mayoría de endpoints requieren un token Bearer en el header:
+```
+Authorization: Bearer <token>
+```
+
+### Endpoints Disponibles
+
+#### [V1] Users
+
+| Método | Ruta                 | Descripción                   | Autenticación |
+|--------|----------------------|-------------------------------|---------------|
+| POST   | /api/v1/accesstoken  | Obtiene token JWT de acceso   | ❌            |
+| POST   | /api/v1/users/get    | Obtiene usuarios activos      | ✅            |
+| POST   | /api/v1/users        | Registra nuevo usuario        | ✅            |
+| PATCH  | /api/v1/users        | Actualiza usuario existente   | ✅            |
 
 ## 📝 Licencia
 
 Este proyecto está bajo la licencia [MIT](https://opensource.org/licenses/MIT).
 
-> La licencia MIT permite a cualquier persona hacer lo que quiera con el código, siempre y cuando se incluya una copia del aviso de derechos de autor y la licencia en cualquier distribución del software.
+---
+
+## 📞 Soporte
+
+Para soporte técnico o preguntas sobre el proyecto, contacta al autor del template.
+
+---
+
+**Desarrollado con ❤️ por Ivan Madera**
