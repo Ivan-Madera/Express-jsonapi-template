@@ -1,5 +1,5 @@
 import { type Handler } from 'express'
-import { createDiaries, getDiaries } from '../services/diaries.service'
+import { createDiariesService, getDiariesService } from '../application/services/diary.application.service'
 import { Codes } from '../utils/codeStatus'
 import { JsonApiResponseError } from '../utils/jsonApiResponses'
 
@@ -8,7 +8,7 @@ export const diaries: Handler = (req, res) => {
   let status = Codes.errorServer
 
   try {
-    const responseService = getDiaries(url)
+    const responseService = getDiariesService(url)
 
     status = responseService.status
     return res.status(status).json(responseService.response)
@@ -28,7 +28,7 @@ export const diariesCreate: Handler = (req, res) => {
       }
     } = req
 
-    const responseService = createDiaries(url, attributes)
+    const responseService = createDiariesService(url, attributes)
 
     status = responseService.status
     return res.status(status).json(responseService.response)

@@ -64,12 +64,16 @@ class Database {
 }
 
 const db = new Database()
-db.getConection()
-  .then(() => {
-    LogInfo('Conexion exitosa')
-  })
-  .catch((error: any) => {
-    LogError(`Conexion fallida: ${error.message as string}`)
-  })
+
+// Solo conectar automáticamente si no estamos en modo test
+if (process.env.NODE_ENV !== 'test') {
+  db.getConection()
+    .then(() => {
+      LogInfo('Conexion exitosa')
+    })
+    .catch((error: any) => {
+      LogError(`Conexion fallida: ${error.message as string}`)
+    })
+}
 
 export const sequelize = db.getSequelize()
