@@ -20,9 +20,7 @@ import {
 } from '../utils/jsonApiResponses'
 import { sign } from 'jsonwebtoken'
 
-export const getAccessTokenService = async (
-  url: string
-): Promise<IJsonApiResponseGeneric> => {
+export const getAccessTokenService = async (): Promise<IJsonApiResponseGeneric> => {
   let status = Codes.errorServer
 
   try {
@@ -35,16 +33,14 @@ export const getAccessTokenService = async (
     status = Codes.success
     return JsonApiResponseGeneric(
       status,
-      JsonApiResponseData('user', data, url)
+      JsonApiResponseData('user', data)
     )
   } catch (error) {
-    return JsonApiResponseGeneric(status, JsonApiResponseError(error, url))
+    return JsonApiResponseGeneric(status, JsonApiResponseError(error))
   }
 }
 
-export const getUsersService = async (
-  url: string
-): Promise<IJsonApiResponseGeneric> => {
+export const getUsersService = async (): Promise<IJsonApiResponseGeneric> => {
   let status = Codes.errorServer
 
   try {
@@ -53,15 +49,14 @@ export const getUsersService = async (
     status = Codes.success
     return JsonApiResponseGeneric(
       status,
-      JsonApiResponseData('user', users, url)
+      JsonApiResponseData('user', users)
     )
   } catch (error) {
-    return JsonApiResponseGeneric(status, JsonApiResponseError(error, url))
+    return JsonApiResponseGeneric(status, JsonApiResponseError(error))
   }
 }
 
 export const createUserService = async (
-  url: string,
   userObj: IUserObj
 ): Promise<IJsonApiResponseGeneric> => {
   let status = Codes.errorServer
@@ -74,16 +69,15 @@ export const createUserService = async (
     status = Codes.success
     return JsonApiResponseGeneric(
       status,
-      JsonApiResponseData('user', findCreate, url)
+      JsonApiResponseData('user', findCreate)
     )
   } catch (error) {
     await rollbackTransaction(t, 'createUserService')
-    return JsonApiResponseGeneric(status, JsonApiResponseError(error, url))
+    return JsonApiResponseGeneric(status, JsonApiResponseError(error))
   }
 }
 
 export const updateUserService = async (
-  url: string,
   nombres: string,
   usuario: string
 ): Promise<IJsonApiResponseGeneric> => {
@@ -106,10 +100,10 @@ export const updateUserService = async (
     status = Codes.success
     return JsonApiResponseGeneric(
       status,
-      JsonApiResponseMessage('user', message, url)
+      JsonApiResponseMessage('user', message)
     )
   } catch (error) {
     await rollbackTransaction(t, 'updateUserService')
-    return JsonApiResponseGeneric(status, JsonApiResponseError(error, url))
+    return JsonApiResponseGeneric(status, JsonApiResponseError(error))
   }
 }

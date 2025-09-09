@@ -6,19 +6,21 @@ import {
   updateUserService
 } from '../services/users.service'
 import { Codes } from '../utils/codeStatus'
-import { JsonApiResponseError } from '../utils/jsonApiResponses'
+import { JsonApiResponseError, addUrlToResponse } from '../utils/jsonApiResponses'
 
 export const getAccessToken: Handler = async (req, res) => {
   const url = req.originalUrl
   let status = Codes.errorServer
 
   try {
-    const responseService = await getAccessTokenService(url)
+    const responseService = await getAccessTokenService()
+    const responseWithUrl = addUrlToResponse(responseService.response, url)
 
     status = responseService.status
-    return res.status(status).json(responseService.response)
+    return res.status(status).json(responseWithUrl)
   } catch (error) {
-    return res.status(status).json(JsonApiResponseError(error, url))
+    const errorResponse = addUrlToResponse(JsonApiResponseError(error), url)
+    return res.status(status).json(errorResponse)
   }
 }
 
@@ -27,12 +29,14 @@ export const getUsers: Handler = async (req, res) => {
   let status = Codes.errorServer
 
   try {
-    const responseService = await getUsersService(url)
+    const responseService = await getUsersService()
+    const responseWithUrl = addUrlToResponse(responseService.response, url)
 
     status = responseService.status
-    return res.status(status).json(responseService.response)
+    return res.status(status).json(responseWithUrl)
   } catch (error) {
-    return res.status(status).json(JsonApiResponseError(error, url))
+    const errorResponse = addUrlToResponse(JsonApiResponseError(error), url)
+    return res.status(status).json(errorResponse)
   }
 }
 
@@ -47,12 +51,14 @@ export const createUser: Handler = async (req, res) => {
       }
     } = req
 
-    const responseService = await createUserService(url, attributes)
+    const responseService = await createUserService(attributes)
+    const responseWithUrl = addUrlToResponse(responseService.response, url)
 
     status = responseService.status
-    return res.status(status).json(responseService.response)
+    return res.status(status).json(responseWithUrl)
   } catch (error) {
-    return res.status(status).json(JsonApiResponseError(error, url))
+    const errorResponse = addUrlToResponse(JsonApiResponseError(error), url)
+    return res.status(status).json(errorResponse)
   }
 }
 
@@ -69,11 +75,13 @@ export const updateUser: Handler = async (req, res) => {
     const nombres = attributes.nombres
     const usuario = attributes.usuario
 
-    const responseService = await updateUserService(url, nombres, usuario)
+    const responseService = await updateUserService(nombres, usuario)
+    const responseWithUrl = addUrlToResponse(responseService.response, url)
 
     status = responseService.status
-    return res.status(status).json(responseService.response)
+    return res.status(status).json(responseWithUrl)
   } catch (error) {
-    return res.status(status).json(JsonApiResponseError(error, url))
+    const errorResponse = addUrlToResponse(JsonApiResponseError(error), url)
+    return res.status(status).json(errorResponse)
   }
 }

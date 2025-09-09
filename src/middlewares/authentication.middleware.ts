@@ -2,7 +2,7 @@ import env from '../config/callEnv'
 import { validationErrors } from '../errors/validation.errors'
 import { Codes } from '../utils/codeStatus'
 import { ErrorException } from '../utils/Exceptions'
-import { JsonApiResponseError } from '../utils/jsonApiResponses'
+import { JsonApiResponseError, addUrlToResponse } from '../utils/jsonApiResponses'
 import { verify } from 'jsonwebtoken'
 
 export const checkAuth = (req: any, res: any, next: any): any => {
@@ -23,7 +23,8 @@ export const checkAuth = (req: any, res: any, next: any): any => {
 
     return next()
   } catch (error) {
-    return res.status(status).json(JsonApiResponseError(error, url))
+    const errorResponse = addUrlToResponse(JsonApiResponseError(error), url)
+    return res.status(status).json(errorResponse)
   }
 }
 
@@ -45,7 +46,8 @@ export const methodValidator = (req: any, res: any, next: any): void => {
 
     return next()
   } catch (error) {
-    return res.status(status).json(JsonApiResponseError(error, url))
+    const errorResponse = addUrlToResponse(JsonApiResponseError(error), url)
+    return res.status(status).json(errorResponse)
   }
 }
 
@@ -67,7 +69,8 @@ export const contentTypeValidator = (req: any, res: any, next: any): void => {
 
     return next()
   } catch (error) {
-    return res.status(status).json(JsonApiResponseError(error, url))
+    const errorResponse = addUrlToResponse(JsonApiResponseError(error), url)
+    return res.status(status).json(errorResponse)
   }
 }
 
@@ -103,6 +106,7 @@ export const checkBearer = (req: any, res: any, next: any): any => {
 
     return next()
   } catch (error) {
-    return res.status(status).json(JsonApiResponseError(error, url))
+    const errorResponse = addUrlToResponse(JsonApiResponseError(error), url)
+    return res.status(status).json(errorResponse)
   }
 }

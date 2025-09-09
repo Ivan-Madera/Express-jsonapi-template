@@ -1,19 +1,21 @@
 import { type Handler } from 'express'
 import { createDiaries, getDiaries } from '../services/diaries.service'
 import { Codes } from '../utils/codeStatus'
-import { JsonApiResponseError } from '../utils/jsonApiResponses'
+import { JsonApiResponseError, addUrlToResponse } from '../utils/jsonApiResponses'
 
 export const diaries: Handler = (req, res) => {
   const url = req.originalUrl
   let status = Codes.errorServer
 
   try {
-    const responseService = getDiaries(url)
+    const responseService = getDiaries()
+    const responseWithUrl = addUrlToResponse(responseService.response, url)
 
     status = responseService.status
-    return res.status(status).json(responseService.response)
+    return res.status(status).json(responseWithUrl)
   } catch (error) {
-    return res.status(status).json(JsonApiResponseError(error, url))
+    const errorResponse = addUrlToResponse(JsonApiResponseError(error), url)
+    return res.status(status).json(errorResponse)
   }
 }
 
@@ -28,11 +30,13 @@ export const diariesCreate: Handler = (req, res) => {
       }
     } = req
 
-    const responseService = createDiaries(url, attributes)
+    const responseService = createDiaries(attributes)
+    const responseWithUrl = addUrlToResponse(responseService.response, url)
 
     status = responseService.status
-    return res.status(status).json(responseService.response)
+    return res.status(status).json(responseWithUrl)
   } catch (error) {
-    return res.status(status).json(JsonApiResponseError(error, url))
+    const errorResponse = addUrlToResponse(JsonApiResponseError(error), url)
+    return res.status(status).json(errorResponse)
   }
 }

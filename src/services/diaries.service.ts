@@ -8,22 +8,21 @@ import {
   JsonApiResponseGeneric
 } from '../utils/jsonApiResponses'
 
-export const getDiaries = (url: string): IJsonApiResponseGeneric => {
+export const getDiaries = (): IJsonApiResponseGeneric => {
   let status = Codes.errorServer
 
   try {
     status = Codes.success
     return JsonApiResponseGeneric(
       status,
-      JsonApiResponseData('diaries', diariesData, url)
+      JsonApiResponseData('diaries', diariesData)
     )
   } catch (error) {
-    return JsonApiResponseGeneric(status, JsonApiResponseError(error, url))
+    return JsonApiResponseGeneric(status, JsonApiResponseError(error))
   }
 }
 
 export const createDiaries = (
-  url: string,
   newDiaryEntry: INewDiaryEntry
 ): IJsonApiResponseGeneric => {
   let status = Codes.errorServer
@@ -39,9 +38,9 @@ export const createDiaries = (
     status = Codes.success
     return JsonApiResponseGeneric(
       status,
-      JsonApiResponseData('diaries', newDiary, url)
+      JsonApiResponseData('diaries', newDiary)
     )
   } catch (error) {
-    return JsonApiResponseGeneric(status, JsonApiResponseError(error, url))
+    return JsonApiResponseGeneric(status, JsonApiResponseError(error))
   }
 }

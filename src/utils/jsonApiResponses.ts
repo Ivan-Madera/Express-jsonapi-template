@@ -11,7 +11,6 @@ import { Codes } from './codeStatus'
 export const JsonApiResponseData = (
   type: string,
   attributes: any | any[],
-  links: string,
   relationships?: any
 ): IJsonApiResponseData => {
   const uuid = uuidv4()
@@ -22,7 +21,7 @@ export const JsonApiResponseData = (
       id: uuid,
       attributes: obj,
       links: {
-        self: links
+        self: '' // Se llenará en el controlador
       }
     }
 
@@ -42,8 +41,7 @@ export const JsonApiResponseData = (
 
 export const JsonApiResponseMessage = (
   type: string,
-  message: string,
-  links: string
+  message: string
 ): IJsonApiResponseMessage => {
   const uuid = uuidv4()
 
@@ -55,19 +53,18 @@ export const JsonApiResponseMessage = (
         message
       },
       links: {
-        self: links
+        self: '' // Se llenará en el controlador
       }
     }
   }
 }
 
 export const JsonApiResponseError = (
-  error: any,
-  url: string
+  error: any
 ): IJsonApiResponseError => {
   const code = error.code || 'ERROR-000'
   const status = error.status || 500
-  const pointer = url
+  const pointer = '' // Se llenará en el controlador
   const suggestions = error.suggestions || 'Please try again later'
   const title = error.title || 'Internal Server Error'
   const message = error.message || 'An unknown error occurred'
@@ -111,4 +108,30 @@ export const JsonApiResponseValidator = (
     title: 'Invalid request body.',
     detail
   }
+}
+
+// Función helper para agregar URL a las respuestas
+export const addUrlToResponse = (
+  response: IJsonApiResponseData | IJsonApiResponseMessage | IJsonApiResponseError,
+  url: string
+): IJsonApiResponseData | IJsonApiResponseMessage | IJsonApiResponseError => {
+  // Si es una respuesta de datos o mensaje, agregar URL a links.self
+  if ('data' in response) {
+    if (Array.isArray(response.data)) {
+      response.data.forEach(item => {
+        if (item.links) {
+          item.links.self = url
+        }
+      })
+    } else if (response.data.links) {
+      response.data.links.self = url
+    }
+  }
+  
+  // Si es una respuesta de error, agregar URL a source.pointer
+  if ('source' in response) {
+    response.source.pointer = url
+  }
+  
+  return response
 }

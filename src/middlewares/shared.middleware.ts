@@ -1,5 +1,5 @@
 import { Codes } from '../utils/codeStatus'
-import { JsonApiResponseError } from '../utils/jsonApiResponses'
+import { JsonApiResponseError, addUrlToResponse } from '../utils/jsonApiResponses'
 import env from '../config/callEnv'
 
 export const baseRoute = (_req: any, res: any, _next: any): void => {
@@ -77,6 +77,7 @@ export const headerNoCache = (req: any, res: any, next: any): void => {
     res.setHeader('Cache-Control', 'no-store')
     return next()
   } catch (error) {
-    return res.status(status).json(JsonApiResponseError(error, url))
+    const errorResponse = addUrlToResponse(JsonApiResponseError(error), url)
+    return res.status(status).json(errorResponse)
   }
 }
