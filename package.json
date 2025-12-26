@@ -45,11 +45,11 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "axios": "^1.7.9",
+    "axios": "1.12.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "express-validator": "^7.0.1",
+    "express-validator": "7.3.0",
     "helmet": "^8.0.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
@@ -59,6 +59,9 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "uuid": "^11.0.3"
+  },
+  "overrides": {
+    "glob": "^13.0.0"
   },
   "engines": {
     "node": ">=18.0.0",
